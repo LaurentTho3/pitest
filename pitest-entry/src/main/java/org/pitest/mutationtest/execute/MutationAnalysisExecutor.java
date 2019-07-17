@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import jp.mzw.adamu.adaptation.knowledge.Knowledge;
 import org.pitest.functional.FCollection;
 import org.pitest.mutationtest.ClassMutationResults;
 import org.pitest.mutationtest.MutationMetaData;
@@ -36,6 +37,8 @@ public class MutationAnalysisExecutor {
   // entry point for mutation testing
   public void run(final List<MutationAnalysisUnit> testUnits, final boolean enableAdamu) {
     if (enableAdamu) {
+      jp.mzw.adamu.adaptation.knowledge.Log.cleanLatestFiles();
+      Knowledge.initDataBases();
       jp.mzw.adamu.adaptation.Monitor.startAdaMuLogger();
     }
     
@@ -65,7 +68,6 @@ public class MutationAnalysisExecutor {
     }
 
     signalRunEndToAllListeners();
-
   }
 
   private void processResult(List<Future<MutationMetaData>> results)

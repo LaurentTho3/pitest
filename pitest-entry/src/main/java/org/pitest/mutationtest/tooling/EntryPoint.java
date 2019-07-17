@@ -3,8 +3,13 @@ package org.pitest.mutationtest.tooling;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.sql.SQLException;
 import java.util.Map;
 
+import jp.mzw.adamu.adaptation.Executor;
+import jp.mzw.adamu.adaptation.knowledge.Knowledge;
+import jp.mzw.adamu.adaptation.knowledge.LogEntry;
+import jp.mzw.adamu.adaptation.knowledge.Stats;
 import org.pitest.classpath.ClassPath;
 import org.pitest.classpath.ClassPathByteArraySource;
 import org.pitest.classpath.CodeSource;
@@ -47,7 +52,20 @@ public class EntryPoint {
   public AnalysisResult execute(File baseDir, ReportOptions data,
       PluginServices plugins, Map<String, String> environmentVariables) {
     final SettingsFactory settings = new SettingsFactory(data, plugins);
-    return execute(baseDir, data, settings, environmentVariables);
+    AnalysisResult result = execute(baseDir, data, settings, environmentVariables);
+
+    if (data.enableAdamu()) {
+      try {
+        Stats.getInstance().insert(Stats.Label.Finish, System.currentTimeMillis());
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      Knowledge.output();
+      LogEntry.logPitReport(result);
+      Executor._finalize();
+    }
+
+    return result;
   }
 
   /**

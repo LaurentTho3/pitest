@@ -21,6 +21,7 @@ import static org.pitest.mutationtest.config.ConfigOption.CLASSPATH_FILE;
 import static org.pitest.mutationtest.config.ConfigOption.CODE_PATHS;
 import static org.pitest.mutationtest.config.ConfigOption.COVERAGE_THRESHOLD;
 import static org.pitest.mutationtest.config.ConfigOption.DEPENDENCY_DISTANCE;
+import static org.pitest.mutationtest.config.ConfigOption.ENABLE_ADAMU;
 import static org.pitest.mutationtest.config.ConfigOption.EXCLUDED_CLASSES;
 import static org.pitest.mutationtest.config.ConfigOption.EXCLUDED_GROUPS;
 import static org.pitest.mutationtest.config.ConfigOption.EXCLUDED_METHOD;
@@ -131,6 +132,7 @@ public class OptionsParser {
   private final OptionSpec<String>                   testPluginSpec;
   private final ArgumentAcceptingOptionSpec<Boolean> includeLaunchClasspathSpec;
   private final ArgumentAcceptingOptionSpec<Boolean> useClasspathJarSpec;
+  private final ArgumentAcceptingOptionSpec<Boolean> enableAdaMu;
   
   public OptionsParser(Predicate<String> dependencyFilter) {
 
@@ -346,6 +348,10 @@ public class OptionsParser {
     this.pluginPropertiesSpec = parserAccepts(PLUGIN_CONFIGURATION)
         .withRequiredArg().ofType(KeyValuePair.class)
         .describedAs("custom plugin properties");
+
+    this.enableAdaMu = parserAccepts(ENABLE_ADAMU)
+            .withOptionalArg().ofType(Boolean.class).defaultsTo(false)
+            .describedAs("enable adamu");
   }
 
   private OptionSpecBuilder parserAccepts(final ConfigOption option) {
@@ -433,6 +439,8 @@ public class OptionsParser {
 
     data.setIncludedTestMethods(this.includedTestMethodsSpec.values(userArgs));
     data.setJavaExecutable(this.javaExecutable.value(userArgs));
+
+    data.setAdamuEnabled(userArgs.valueOf(this.enableAdaMu));
 
     if (userArgs.has("?")) {
       return new ParseResult(data, "See above for supported parameters.");
