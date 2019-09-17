@@ -215,7 +215,12 @@ public enum ConfigOption {
    * Allows very long classpaths that would otherwise exceed OS limits, but
    * may cause problems with some third party libraries.
    */
-  USE_CLASSPATH_JAR("useClasspathJar", false);
+  USE_CLASSPATH_JAR("useClasspathJar", false),
+
+  /**
+   * Whether to enable AdaMu or not
+   */
+  ENABLE_ADAMU("enableAdaMu", false);
 
   private final String       text;
   private final Serializable defaultValue;

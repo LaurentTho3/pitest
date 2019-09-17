@@ -93,6 +93,7 @@ public class MojoToReportOptionsConverter {
           .getOutputDirectory()));
     }
 
+    data.setAdamuEnabled(this.mojo.isEnableAdaMu());
     data.setUseClasspathJar(this.mojo.isUseClasspathJar());
     data.setTestPlugin(this.mojo.getTestPlugin());
     data.setClassPathElements(classPath);

@@ -369,6 +369,9 @@ public class AbstractPitMojo extends AbstractMojo {
   @Parameter(property = "useClasspathJar", defaultValue = "false")
   private boolean                     useClasspathJar;
 
+  @Parameter(property = "enableAdaMu", defaultValue = "false")
+  private boolean                     enableAdaMu;
+
   private final GoalStrategy          goalStrategy;
 
   public AbstractPitMojo() {
@@ -701,6 +704,10 @@ public class AbstractPitMojo extends AbstractMojo {
    
   public boolean isUseClasspathJar() {
     return this.useClasspathJar;
+  }
+
+  public boolean isEnableAdaMu() {
+    return this.enableAdaMu;
   }
 
   static class RunDecision {
