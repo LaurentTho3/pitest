@@ -107,7 +107,7 @@ public class MutationTestUnit implements MutationAnalysisUnit {
         //not rerun crashed from previous range
         crashedRuns.retainAll(remainingMutations);
 
-        LOG.info("Rerunning " + crashedRuns.size() + " mutant(s) because of minion crash");
+        LOG.warning("Rerunning " + crashedRuns.size() + " mutant(s) because of minion crash");
         for (MutationDetails d : crashedRuns) {
             MutationStatusTestPair result = null;
             for (TestInfo t : d.getTestsInOrder()) {
