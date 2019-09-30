@@ -49,7 +49,7 @@ public class TimeSpan {
     final long millis = duration();
     final int seconds = (int) (millis / 1000) % 60;
     final int minutes = (int) ((millis / (1000 * 60)) % 60);
-    final int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
+    final int hours = (int) (millis / (1000 * 60 * 60));
 
     if (hours != 0) {
       return "" + hours + " hours, " + minutes + " minutes and " + seconds

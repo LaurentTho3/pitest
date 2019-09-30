@@ -168,6 +168,7 @@ public class XMLReportListener implements MutationResultListener {
   private void write(final String value) {
     try {
       this.out.write(value);
+      this.out.flush();
     } catch (final IOException e) {
       throw Unchecked.translateCheckedException(e);
     }
