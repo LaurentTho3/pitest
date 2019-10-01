@@ -26,6 +26,7 @@ public class Stats extends KnowledgeBase implements DataBase {
     @Override
     public Connection getConnection() throws SQLException {
          if (conn == null) {
+             Log.getLatestDir();
               conn = DriverManager.getConnection("jdbc:sqlite:logs/latest/stats.db");
          }
          return conn;

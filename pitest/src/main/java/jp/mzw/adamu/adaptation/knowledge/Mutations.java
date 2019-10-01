@@ -30,6 +30,7 @@ public class Mutations extends KnowledgeBase implements DataBase {
 	@Override
 	public Connection getConnection() throws SQLException {
 		if (conn == null) {
+			Log.getLatestDir();
 			conn = DriverManager.getConnection("jdbc:sqlite:logs/latest/mutations.db");
 		}
 		return conn;

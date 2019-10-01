@@ -27,6 +27,7 @@ public class Overhead extends KnowledgeBase implements DataBase {
     @Override
     public Connection getConnection() throws SQLException {
         if (conn == null) {
+            Log.getLatestDir();
             conn = DriverManager.getConnection("jdbc:sqlite:logs/latest/overheads.db");
        }
        return conn;
