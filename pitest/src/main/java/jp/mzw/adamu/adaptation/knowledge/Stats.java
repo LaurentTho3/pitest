@@ -91,74 +91,74 @@ public class Stats extends KnowledgeBase implements DataBase {
     }
     
     public int getNumMutantsBurnin() {
-    	try {
-	        Statement stmt = getConnection().createStatement();
-	        ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.Burnin + "'");
-	        int ret = results.getInt(1);
-	        results.close();
-	        stmt.close();
-	        return ret;
-    	} catch (SQLException e) {
-        	return -1;
+        try {
+            Statement stmt = getConnection().createStatement();
+            ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.Burnin + "'");
+            int ret = results.getInt(1);
+            results.close();
+            stmt.close();
+            return ret;
+        } catch (SQLException e) {
+            return -1;
         }
     }
     
     public int getNumMutantsStop() {
-    	try {
-	        Statement stmt = getConnection().createStatement();
-	        ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.Quit + "'");
-	        int ret = results.getInt(1);
-	        results.close();
-	        stmt.close();
-	        return ret;
-    	} catch (SQLException e) {
-        	return -1;
+        try {
+            Statement stmt = getConnection().createStatement();
+            ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.Quit + "'");
+            int ret = results.getInt(1);
+            results.close();
+            stmt.close();
+            return ret;
+        } catch (SQLException e) {
+            return -1;
         }
     }
     
     @Override
     public void output() {
-    	try {
-    		Long start = null;
-    		Long end = null;
-    		{
-	            Statement stmt = getConnection().createStatement();
-	            ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.StartTime + "'");
-	            start = Long.parseLong(results.getString(1));
-	            results.close();
-	            stmt.close();
-    		}
-    		{
-	            Statement stmt = getConnection().createStatement();
-	            ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.Finish + "'");
-	            end = Long.parseLong(results.getString(1));
-	            results.close();
-	            stmt.close();
-    		}
-    		Long elapsed_time = end - start;
-			FileUtils.write(new File(Log.getLatestDir(), "elapsed_time.csv"),  elapsed_time.toString());
-			
-			{
-				StringBuilder builder = new StringBuilder();
-				Statement stmt = getConnection().createStatement();
-				ResultSet results = stmt.executeQuery("select time, key, value from stats");
-				while (results.next()) {
-					int time = (int) (results.getInt(1) - start);
-					String key = results.getString(2);
-					String value = results.getString(3);
-					builder.append(time).append(COMMA)
-						.append(key).append(COMMA)
-						.append(value).append(BR);
-				}
-				results.close();
-				stmt.close();
-				FileUtils.write(new File(Log.getLatestDir(), "stats.csv"), builder.toString());
-			}
-			
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
+        try {
+            Long start = null;
+            Long end = null;
+            {
+                Statement stmt = getConnection().createStatement();
+                ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.StartTime + "'");
+                start = Long.parseLong(results.getString(1));
+                results.close();
+                stmt.close();
+            }
+            {
+                Statement stmt = getConnection().createStatement();
+                ResultSet results = stmt.executeQuery("select value from stats where key='" + Label.Finish + "'");
+                end = Long.parseLong(results.getString(1));
+                results.close();
+                stmt.close();
+            }
+            Long elapsed_time = end - start;
+            FileUtils.write(new File(Log.getLatestDir(), "elapsed_time.csv"),  elapsed_time.toString());
+            
+            {
+                StringBuilder builder = new StringBuilder();
+                Statement stmt = getConnection().createStatement();
+                ResultSet results = stmt.executeQuery("select time, key, value from stats");
+                while (results.next()) {
+                    int time = (int) (results.getInt(1) - start);
+                    String key = results.getString(2);
+                    String value = results.getString(3);
+                    builder.append(time).append(COMMA)
+                        .append(key).append(COMMA)
+                        .append(value).append(BR);
+                }
+                results.close();
+                stmt.close();
+                FileUtils.write(new File(Log.getLatestDir(), "stats.csv"), builder.toString());
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
