@@ -36,11 +36,18 @@ public class MutationTestProcess {
   }
 
   public void results(final MutationStatusMap allmutations) throws IOException {
+    this.results(allmutations, false);
+  }
+
+  public void results(final MutationStatusMap allmutations, boolean enableAdamu) throws IOException {
 
     for (final MutationDetails each : allmutations.allMutations()) {
       final MutationStatusTestPair status = this.thread.getStatus(each.getId());
       if (status != null) {
         allmutations.setStatusForMutation(each, status);
+        if (enableAdamu) {
+          jp.mzw.adamu.adaptation.Monitor.monitorMutationResult(each, status.getStatus());
+        }
       }
     }
 

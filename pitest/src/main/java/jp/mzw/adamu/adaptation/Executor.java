@@ -11,6 +11,7 @@ import java.util.Map;
 //import java.util.concurrent.FutureTask;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -233,8 +234,8 @@ public class Executor extends MAPE {
                                 FutureTask<?> task = (FutureTask<?>) worker;
                                 task.cancel(true);
                             }
+                            executor.awaitTermination(1, TimeUnit.DAYS);
                         }
-                        Executor._finalize();
                         break;
                     }
                 } catch (Exception e) {

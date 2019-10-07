@@ -97,7 +97,7 @@ public class MutationTestUnit implements MutationAnalysisUnit {
         remainingMutations);
 
     ExitCode exitCode = waitForMinionToDie(worker);
-    worker.results(mutations);
+    worker.results(mutations, this.enableAdamu);
 
     correctResultForProcessExitCode(mutations, exitCode);
 

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import jp.mzw.adamu.adaptation.Executor;
-import jp.mzw.adamu.adaptation.knowledge.Knowledge;
 import jp.mzw.adamu.adaptation.knowledge.LogEntry;
 import jp.mzw.adamu.adaptation.knowledge.Stats;
 import org.pitest.classpath.ClassPath;
@@ -60,7 +59,6 @@ public class EntryPoint {
       } catch (SQLException e) {
         e.printStackTrace();
       }
-      Knowledge.output();
       LogEntry.logPitReport(result);
       Executor._finalize();
     }
