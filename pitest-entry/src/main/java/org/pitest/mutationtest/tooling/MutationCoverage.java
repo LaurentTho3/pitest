@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jp.mzw.adamu.adaptation.knowledge.Knowledge;
 import org.pitest.classinfo.ClassByteArraySource;
 import org.pitest.classinfo.ClassInfo;
 import org.pitest.classinfo.ClassName;
@@ -105,6 +106,12 @@ public class MutationCoverage {
     LOG.fine("System class path is " + System.getProperty("java.class.path"));
     LOG.fine("Maximum available memory is " + (runtime.maxMemory() / MB)
         + " mb");
+
+    if (this.data.enableAdamu()) {
+      jp.mzw.adamu.adaptation.knowledge.Log.cleanLatestFiles();
+      Knowledge.initDataBases();
+      jp.mzw.adamu.adaptation.Monitor.startAdaMuLogger();
+    }
 
     final long t0 = System.currentTimeMillis();
 
