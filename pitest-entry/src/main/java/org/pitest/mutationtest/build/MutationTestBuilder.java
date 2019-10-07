@@ -84,11 +84,9 @@ public class MutationTestBuilder {
       if (this.enableAdamu) {
         tus.addAll(jp.mzw.adamu.adaptation.MonitorEntry.orderTestExecutionOnMutants(codeClasses, needAnalysis, this.grouper, this.workerFactory, this.enableAdamu));
       } else {
-//        for (final Collection<MutationDetails> ms : this.grouper.groupMutations(codeClasses, needAnalysis)) {
-//        tus.add(makeUnanalysedUnit(ms));
-//        }
-        Collections.shuffle(mutations);
-        tus.add(makeUnanalysedUnit(mutations));
+        for (final Collection<MutationDetails> ms : this.grouper.groupMutations(codeClasses, needAnalysis)) {
+        tus.add(makeUnanalysedUnit(ms));
+        }
       }
     }
     Collections.sort(tus, new AnalysisPriorityComparator());
