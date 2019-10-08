@@ -14,6 +14,7 @@
  */
 package org.pitest.mutationtest.execute;
 
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -63,6 +64,8 @@ public final class MutationTimeoutDecorator extends TestUnitDecorator {
       // swallow
     } catch (final InterruptedException e) {
       // swallow
+    } catch (final CancellationException e) {
+      //swallow
     } catch (final ExecutionException e) {
       throw Unchecked.translateCheckedException(e);
     }

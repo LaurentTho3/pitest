@@ -16,6 +16,7 @@ package org.pitest.util;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
@@ -63,6 +64,9 @@ public class CommunicationThread {
       return ExitCode.UNKNOWN_ERROR;
     } catch (final InterruptedException e) {
       LOG.log(Level.WARNING, "interrupted while waiting for child process", e);
+      return ExitCode.UNKNOWN_ERROR;
+    } catch (final CancellationException e) {
+      LOG.log(Level.WARNING, "Execution was cancelled", e);
       return ExitCode.UNKNOWN_ERROR;
     }
 
