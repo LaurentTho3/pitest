@@ -2,12 +2,14 @@ package org.pitest.mutationtest.execute;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.pitest.functional.FCollection;
@@ -60,6 +62,8 @@ public class MutationAnalysisExecutor {
       throw Unchecked.translateCheckedException(e);
     } catch (final ExecutionException e) {
       throw Unchecked.translateCheckedException(e);
+    } catch (final CancellationException e) {
+      LOG.log(Level.WARNING, "Execution cancelled by Adamu", e);
     }
 
     signalRunEndToAllListeners();
