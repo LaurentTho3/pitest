@@ -81,6 +81,8 @@ public class ConvergeDiagnostic extends ModelBase {
 		} catch (java.lang.IllegalArgumentException e) {
 //			e.printStackTrace();
 			return false;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return false;
 		}
 	}
 	
